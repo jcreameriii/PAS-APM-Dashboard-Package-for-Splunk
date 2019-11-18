@@ -37,6 +37,14 @@ CyberArk Privileged Access Security Application Performance Monitoring (APM) Das
 9. Click "Save" in the top right hand corner
 
 
-Vault Dashboard:
+**Vault Dashboard:**
 ![Vault Dashboard](/Screenshots/PAS-APM-Vault-Screenshot.PNG)
-Format: ![Alt Text](url)
+
+**CPM Dashboard:**
+![CPM Dashboard](/Screenshots/PAS-APM-CPM-Screenshot.PNG)
+
+**PSM Dashboard:**
+![PSM Dashboard](/Screenshots/PAS-APM-PSM-Screenshot.PNG)
+
+**PVWA Dashboard:**
+![PVWA Dashboard](/Screenshots/PAS-APM-PVWA-Screenshot.PNG)
