@@ -2,15 +2,14 @@
 $HostName = "components"
 $PORT = 51444
 $SYSLOGSERVER="10.0.0.2"
+$Version = "1.0.0000"
 
 #Cyberark Password Manager Service Check
-$MonitorType = "Application Monitor"
+$MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "Cyberark Password Manager" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "Cyberark Password Manager" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$Date = Get-Date
-$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
-$syslogoutput = "$DateTime, $HostName, $ServiceName, $ServiceStatus, $ServiceStatusNumeric, $MonitorType"
+$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -22,13 +21,11 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #Cyberark Central Policy Manager Scanner Service Check
-$MonitorType = "Application Monitor"
+$MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "Cyberark Central Policy Manager Scanner" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "Cyberark Central Policy Manager Scanner" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$Date = Get-Date
-$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
-$syslogoutput = "$DateTime, $HostName, $ServiceName, $ServiceStatus, $ServiceStatusNumeric, $MonitorType"
+$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -40,13 +37,11 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #CyberArk Vault-Conjur Synchronizer Service Check
-$MonitorType = "Application Monitor"
+$MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "CyberArk Vault-Conjur Synchronizer" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "CyberArk Vault-Conjur Synchronizer" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$Date = Get-Date
-$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
-$syslogoutput = "$DateTime, $HostName, $ServiceName, $ServiceStatus, $ServiceStatusNumeric, $MonitorType"
+$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -58,13 +53,11 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #Cyber-Ark Privileged Session Manager Service Check
-$MonitorType = "Application Monitor"
+$MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "Cyber-Ark Privileged Session Manager" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "Cyber-Ark Privileged Session Manager" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$Date = Get-Date
-$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
-$syslogoutput = "$DateTime, $HostName, $ServiceName, $ServiceStatus, $ServiceStatusNumeric, $MonitorType"
+$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -76,13 +69,11 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #PVWA World Wide Web Publishing Service Check
-$MonitorType = "Application Monitor"
+$MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "W3SVC" | Format-Table -HideTableHeaders DisplayName | Out-String
 $ServiceStatus = Get-Service "W3SVC" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$Date = Get-Date
-$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
-$syslogoutput = "$DateTime, $HostName, $ServiceName, $ServiceStatus, $ServiceStatusNumeric, $MonitorType"
+$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -94,13 +85,11 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #Remote Desktop Services Service Check
-$MonitorType = "Application Monitor"
+$MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "TermService" | Format-Table -HideTableHeaders DisplayName | Out-String
 $ServiceStatus = Get-Service "TermService" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$Date = Get-Date
-$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
-$syslogoutput = "$DateTime, $HostName, $ServiceName, $ServiceStatus, $ServiceStatusNumeric, $MonitorType"
+$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -112,11 +101,9 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #PSM Session Count
-$MonitorType = "Application Monitor"
+$MonitorType = "ApplicationMonitor"
 $PSMSessionCount = Get-RDUserSession | Measure-Object | Format-Table -HideTableHeaders Count | Out-String
-$Date = Get-Date
-$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
-$syslogoutput = "$DateTime, $HostName, Remote Desktop Session, Max Count, $PSMSessionCount, $MonitorType"
+$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -128,7 +115,7 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #Hardware Performance Checks
-$MonitorType = "HardwarePerfMon"
+$MonitorType = "HardwareMonitor"
 $CPU = Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select Average | Format-Table -HideTableHeaders Average | Out-String
 $os = Get-Ciminstance Win32_OperatingSystem
 $FreePhysicalMemory = $os.FreePhysicalMemory
@@ -143,9 +130,7 @@ $TotalSpaceGBDecimal = $TotalSpace / 1073741824
 $FreeSpaceGBDecimal = $FreeSpace / 1073741824
 $TotalSpaceGB = [math]::Round($TotalSpaceGBDecimal,1)
 $FreeSpaceGB = [math]::Round($FreeSpaceGBDecimal,1)
-$Date = Get-Date
-$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
-$syslogoutput = "$DateTime, $HostName, $CPU, $Memory, $TotalSpaceGB, $FreeSpaceGB, $MonitorType"
+$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$CPU|$Memory|$TotalSpaceGB|$FreeSpaceGB"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
