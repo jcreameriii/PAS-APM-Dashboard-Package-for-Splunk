@@ -35,3 +35,8 @@ CyberArk Privileged Access Security Application Performance Monitoring (APM) Das
 7. Click the "Source' button in the top left hand corner of the dashboard to modify the source code
 8. Copy the source code from the corresponding .XML file and override all of the existing dashboard code
 9. Click "Save" in the top right hand corner
+
+
+Vault Dashboard:
+![Vault Dashboard](/images/pas-apm-vault-screenshot.png)
+Format: ![Alt Text](url)
