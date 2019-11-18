@@ -36,6 +36,11 @@ CyberArk Privileged Access Security Application Performance Monitoring (APM) Das
 8. Copy the source code from the corresponding .XML file and override all of the existing dashboard code
 9. Click "Save" in the top right hand corner
 
+**How do I use these dashboards?**
+These dashboards are designed to provide meaningful application performance monitoring information for the CyberArk PAS solution. Dashboards are broken up into three sections, (1) Service Status, (2) Hardware Performance Monitors, and (3) Applicaiton Performance Metrics. Each of these dashboards and the data they contain are unique to the component of the CyberArk PAS solution they're designed to monitor.
+(1) Service Status: The service status panels will provide information on the key services related to that component, including a color indiciator to determine whether the service is up or down quickly and the current service status.
+(2) Hardware Performance Monitors: The hardware performance monitor panels show CPU Usage %, Memory Usage % and Disk Space Usage over a period of time and the current level. It too includes a color incidator to detmeine whether there is an immedaite issue that requires attention.
+(3) Application Performance Metrics: The application performance metrics will vary depending on the component being monitored, but may contain information such as average/max times/tasks, transcation information, session counts, error counts and other important information. For more information on each of these panels view the XML file source code or click the search icon to view the raw data within Splunk.
 
 **Vault Dashboard:**
 ![Vault Dashboard](/Screenshots/PAS-APM-Vault-Screenshot.PNG)
