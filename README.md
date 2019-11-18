@@ -2,9 +2,9 @@
 
 CyberArk Privileged Access Security Application Performance Monitoring (APM) Dashboard Package for Splunk. The PAS APM dashboards are designed to show critical monitoring information for the CyberArk PAS application, including hardware (CPU/memory/disk) and software (service status, application statistics) information for Vault, CPM, PVWA, PSM and PTA.
 
-Under Development.
+**_Under Development_**
 
-Vault Server(s) Configuration Steps:
+**Vault Server(s) Configuration Steps:**
 1. Copy PAS-APM-Vault.ps1 to Vault Server(s)
 2. Configure PAS-APM-Vault.ps1 to run as a scheduled task that runs every minute, indefinetly
 3. Create non-standard firewall rule to allow outbound UDP traffic for the powershell script to send SYSLOG traffic out ONLY to the SIEM server
@@ -12,13 +12,13 @@ Vault Server(s) Configuration Steps:
 4. Run the scheduled task and vadlidate that Splunk is receving the syslogs
 5. If not already done, enable "Vault Monitor" syslog messages to be sent from your Vault Server(s)
 
-Component Server(s) Configuration Steps:
+**Component Server(s) Configuration Steps:**
 1. Copy PAS-APM-Components.ps1 to the Component Server(s)
 2. Configure the PAS-APM-Components.ps1 to run as a scheduled task that runs every minute, indefinetly 
 3. Modify the PAS-APM-Components.ps1 to only monitor for the required services on that component server (e.g. remove PSM relevant monitors for non-PSM servers, etc)
 4. Run the scheduled task and validate that Splunk is receiving the syslogs
 
-Splunk Configuration Steps:
+**Splunk Configuration Steps:**
 1. Validate that Splunk is receiving the syslog messages from all the Vaults/Components
 2. Once you have validated Splunk is reciving the messages, for you will need to define the Field names for the values in the syslog messages.
   2.1. For the PowerShell-based messages, create custom Fields based on the following names/format: "DateTime, HostName, ServiceName, ServiceStatus, ServiceStatusNumeric, ServiceStatusNumeric2"
