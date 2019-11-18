@@ -42,6 +42,9 @@ These dashboards are designed to provide meaningful application performance moni
 (2) Hardware Performance Monitors: The hardware performance monitor panels show CPU Usage %, Memory Usage % and Disk Space Usage over a period of time and the current level. It too includes a color incidator to detmeine whether there is an immedaite issue that requires attention.
 (3) Application Performance Metrics: The application performance metrics will vary depending on the component being monitored, but may contain information such as average/max times/tasks, transcation information, session counts, error counts and other important information. For more information on each of these panels view the XML file source code or click the search icon to view the raw data within Splunk.
 
+**How often do the dashboards update?**
+The data is being fed into Splunk at near real-time, at one-minute intervals from the Vault and Component servers. The dashboards themselves are configured to refresh each panel query every 30 seconds.
+
 **Vault Dashboard:**
 ![Vault Dashboard](/Screenshots/PAS-APM-Vault-Screenshot.PNG)
 
