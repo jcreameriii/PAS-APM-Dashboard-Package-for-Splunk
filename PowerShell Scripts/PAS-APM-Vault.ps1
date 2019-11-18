@@ -1,5 +1,5 @@
 #Service Status Check for Vault Server
-$HostName = "VAULT"
+$HostName = "$env:computername"
 $PORT = 51444
 $SYSLOGSERVER="10.0.0.2"
 $Version = "1.0.0000"
