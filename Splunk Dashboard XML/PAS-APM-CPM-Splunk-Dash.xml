@@ -221,7 +221,7 @@
       <title>Disk Space Free (GB) (Current)</title>
       <single>
         <search>
-          <query>host=10.0.1.12 hardwaremonitor | stats first(Info3)</query>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info5)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -230,7 +230,7 @@
         <option name="colorMode">block</option>
         <option name="drilldown">none</option>
         <option name="height">114</option>
-        <option name="numberPrecision">0</option>
+        <option name="numberPrecision">0.0</option>
         <option name="rangeColors">["0xdc4e41","0xf8be34","0x53a051"]</option>
         <option name="rangeValues">[10,20]</option>
         <option name="refresh.display">progressbar</option>
