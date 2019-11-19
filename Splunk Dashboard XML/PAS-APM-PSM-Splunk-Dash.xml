@@ -12,8 +12,8 @@
       <single>
         <title>Host: Components</title>
         <search>
-          <query>host="10.0.1.12" ServiceName="Cyber-Ark Privileged Session Manager" ServiceStatus=* 
-|  stats first(ServiceStatusNumeric)</query>
+          <query>host="10.0.1.12" Info2="Cyber-Ark Privileged Session Manager" Info3=* 
+|  stats first(Info4)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -32,8 +32,8 @@
       <single>
         <title>Host: Components</title>
         <search>
-          <query>host="10.0.1.12" ServiceName="Remote Desktop Services" ServiceStatus=* 
-|  stats first(ServiceStatusNumeric)</query>
+          <query>host="10.0.1.12" Info2="Remote Desktop Services" Info3=* 
+|  stats first(Info4)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -52,8 +52,8 @@
     <panel>
       <single>
         <search>
-          <query>host="10.0.1.12" ServiceName="Cyber-Ark Privileged Session Manager"
-|  stats first(ServiceStatus)</query>
+          <query>host="10.0.1.12" Info2="Cyber-Ark Privileged Session Manager"
+|  stats first(Info3)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -66,8 +66,8 @@
     <panel>
       <single>
         <search>
-          <query>host="10.0.1.12" ServiceName="Remote Desktop Services" ServiceStatus=*
-|  stats first(ServiceStatus)</query>
+          <query>host="10.0.1.12" Info2="Remote Desktop Services" Info3=*
+|  stats first(Info3)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -85,12 +85,12 @@
   </row>
   <row>
     <panel>
-      <title>CPU Usage % (Today)</title>
+      <title>CPU Usage % (Last 24 Hours)</title>
       <chart>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon 
-|  timechart span=1m values(ServiceName)</query>
-          <earliest>@d</earliest>
+          <query>host=10.0.1.12 hardwaremonitor 
+|  timechart span=1m values(Info2)</query>
+          <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
           <refresh>30s</refresh>
@@ -133,12 +133,12 @@
       </chart>
     </panel>
     <panel>
-      <title>Memory Usage % (Today)</title>
+      <title>Memory Usage % (Last 24 Hours)</title>
       <chart>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon 
-|  timechart span=1m values(ServiceStatus)</query>
-          <earliest>@d</earliest>
+          <query>host=10.0.1.12 hardwaremonitor 
+|  timechart span=1m values(Info3)</query>
+          <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
           <refreshType>delay</refreshType>
@@ -156,8 +156,8 @@
       <title>Disk Space Utilization (Total vs. Free) (Today)</title>
       <chart>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon | timechart span=1m values(ServiceStatusNumeric2) values(ServiceStatusNumeric)</query>
-          <earliest>@d</earliest>
+          <query>host=10.0.1.12 hardwaremonitor | timechart span=1m values(Info5) values(Info4)</query>
+          <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
           <refreshType>delay</refreshType>
@@ -183,7 +183,7 @@
       <title>CPU Usage % (Current)</title>
       <single>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon | stats first(ServiceName)</query>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info2)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -202,7 +202,7 @@
       <title>Memory Usage % (Current)</title>
       <single>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon | stats first(ServiceStatus)</query>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info3)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -221,7 +221,7 @@
       <title>Disk Space Free (GB) (Current)</title>
       <single>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon | stats first(ServiceStatusNumeric2)</query>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info5)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -230,7 +230,7 @@
         <option name="colorMode">block</option>
         <option name="drilldown">none</option>
         <option name="height">114</option>
-        <option name="numberPrecision">0</option>
+        <option name="numberPrecision">0.0</option>
         <option name="rangeColors">["0xdc4e41","0xf8be34","0x53a051"]</option>
         <option name="rangeValues">[10,20]</option>
         <option name="refresh.display">progressbar</option>
@@ -249,9 +249,9 @@
       <title>Concurrent RDS Sessions (Current)</title>
       <single>
         <search>
-          <query>host="10.0.1.12" ServiceName="Remote Desktop Session" ServiceStatus=* 
-|  stats first(ServiceStatusNumeric)</query>
-          <earliest>-24h@h</earliest>
+          <query>host="10.0.1.12" Info2="Remote Desktop User Sessions"
+|  stats first(Info3)</query>
+          <earliest>@d</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
           <refreshType>delay</refreshType>
@@ -266,12 +266,12 @@
       </single>
     </panel>
     <panel>
-      <title>PSM Session Activity (Today)</title>
+      <title>PSM Session Activity (Last 24 Hours)</title>
       <chart>
         <search>
           <query>act="PSM Connect" 
 |  timechart span=1m count</query>
-          <earliest>@d</earliest>
+          <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
           <refreshType>delay</refreshType>
