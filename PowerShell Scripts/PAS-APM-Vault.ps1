@@ -3,13 +3,15 @@ $HostName = "$env:computername"
 $PORT = 51444
 $SYSLOGSERVER="10.0.0.2"
 $Version = "1.0.0000"
+$Date = Get-Date
+$DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
 
 #PrivateArk Server Service Check
 $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "PrivateArk Server" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "PrivateArk Server" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -25,7 +27,7 @@ $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "PrivateArk Database" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "PrivateArk Database" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -41,7 +43,7 @@ $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "CyberArk Logic Container" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "CyberArk Logic Container" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -57,7 +59,7 @@ $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "PrivateArk Remote Control Agent" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "PrivateArk Remote Control Agent" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -73,7 +75,7 @@ $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "Cyber-Ark Event Notification Engine" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "Cyber-Ark Event Notification Engine" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
