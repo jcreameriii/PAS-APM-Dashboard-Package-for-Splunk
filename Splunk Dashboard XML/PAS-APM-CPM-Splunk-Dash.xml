@@ -12,8 +12,8 @@
       <single>
         <title>Host: Components</title>
         <search>
-          <query>host="10.0.1.12" ServiceName="CyberArk Password Manager" ServiceStatus=* 
-|  stats first(ServiceStatusNumeric)</query>
+          <query>host="10.0.1.12" Info2="CyberArk Password Manager" Info3=* 
+|  stats first(Info4)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -32,8 +32,8 @@
       <single>
         <title>Host: Components</title>
         <search>
-          <query>host="10.0.1.12" ServiceName="CyberArk Central Policy Manager Scanner" ServiceStatus=* 
-|  stats first(ServiceStatusNumeric)</query>
+          <query>host="10.0.1.12" Info2="CyberArk Central Policy Manager Scanner" Info3=* 
+|  stats first(Info4)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -52,8 +52,8 @@
     <panel>
       <single>
         <search>
-          <query>host="10.0.1.12" ServiceName="CyberArk Password Manager"
-|  stats first(ServiceStatus)</query>
+          <query>host="10.0.1.12" Info2="CyberArk Password Manager"
+|  stats first(Info3)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -66,8 +66,8 @@
     <panel>
       <single>
         <search>
-          <query>host="10.0.1.12" ServiceName="CyberArk Central Policy Manager Scanner" ServiceStatus=*
-|  stats first(ServiceStatus)</query>
+          <query>host="10.0.1.12" Info2="CyberArk Central Policy Manager Scanner" Info3=*
+|  stats first(Info3)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -85,12 +85,12 @@
   </row>
   <row>
     <panel>
-      <title>CPU Usage % (Today)</title>
+      <title>CPU Usage % (Last 24 Hours)</title>
       <chart>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon 
-|  timechart span=1m values(ServiceName)</query>
-          <earliest>@d</earliest>
+          <query>host=10.0.1.12 hardwaremonitor 
+|  timechart span=1m values(Info2)</query>
+          <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
           <refresh>30s</refresh>
@@ -133,14 +133,14 @@
       </chart>
     </panel>
     <panel>
-      <title>Memory Usage % (Today)</title>
+      <title>Memory Usage % (Last 24 Hours)</title>
       <chart>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon 
-|  timechart span=1m values(ServiceStatus)</query>
-          <earliest>@d</earliest>
+          <query>host=10.0.1.12 hardwaremonitor 
+|  timechart span=1m values(Info3)</query>
+          <earliest>-24h@h</earliest>
           <latest>now</latest>
-          <refresh>1m</refresh>
+          <refresh>30s</refresh>
           <refreshType>delay</refreshType>
         </search>
         <option name="charting.axisTitleX.text">Time</option>
@@ -153,13 +153,13 @@
       </chart>
     </panel>
     <panel>
-      <title>Disk Space Utilization (Total vs. Free) (Today)</title>
+      <title>Disk Space Utilization (Total vs. Free) (Last 24 Hours)</title>
       <chart>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon | timechart span=1m values(ServiceStatusNumeric2) values(ServiceStatusNumeric)</query>
-          <earliest>@d</earliest>
+          <query>host=10.0.1.12 hardwaremonitor | timechart span=1m values(Info5) values(Info4)</query>
+          <earliest>-24h@h</earliest>
           <latest>now</latest>
-          <refresh>1m</refresh>
+          <refresh>30s</refresh>
           <refreshType>delay</refreshType>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
@@ -183,7 +183,7 @@
       <title>CPU Usage % (Current)</title>
       <single>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon | stats first(ServiceName)</query>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info2)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -202,7 +202,7 @@
       <title>Memory Usage % (Current)</title>
       <single>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon | stats first(ServiceStatus)</query>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info3)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
@@ -221,7 +221,7 @@
       <title>Disk Space Free (GB) (Current)</title>
       <single>
         <search>
-          <query>host=10.0.1.12 hardwareperfmon | stats first(ServiceStatusNumeric2)</query>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info3)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
