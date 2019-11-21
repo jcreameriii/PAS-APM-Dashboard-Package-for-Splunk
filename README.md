@@ -56,3 +56,6 @@ The data is being fed into Splunk at near real-time, at one-minute intervals fro
 
 **PVWA Dashboard:**
 ![PVWA Dashboard](/Screenshots/PAS-APM-PVWA-Screenshot.PNG)
+
+**Note**
+1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the "UseLegacySyslogFormat" to Yes for the Splunk configuraiton in your dbparm.ini file on the Vault server(s).
