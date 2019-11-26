@@ -76,7 +76,7 @@ These dashboards are designed to provide meaningful application performance moni
 **Hardware Performance Monitors:** The hardware performance monitor panels show CPU Usage %, Memory Usage % and Disk Space Usage over a period of time and the current level. It too includes a color incidator to detmeine whether there is an immedaite issue that requires attention.
 
 **Application Metrics:** The application metrics will vary depending on the component being monitored, but may contain information such as average/max times/tasks, transcation information, session counts, error counts and other important information. For more information on each of these panels view the XML file source code or click the search icon to view the raw data within Splunk.
-####Note:
+#### Note:
 The PTA Dashboard only contains application metrics (relevant threat analytics information), including severity, recent events and trends. It does not contain service status or hardware monitors.
 
 ### How Often Do The Dashboards Update?
