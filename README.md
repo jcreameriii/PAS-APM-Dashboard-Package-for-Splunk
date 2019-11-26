@@ -1,7 +1,7 @@
 ## CyberArk Privileged Access Security Application Performance Monitoring (APM) Dashboard Package for Splunk
 The PAS APM dashboards are designed to show critical monitoring information for the CyberArk PAS application, including hardware (CPU/memory/disk) and software (service status, application statistics) information for Vault, CPM, PVWA, PSM and PTA.
 
-## Moviation
+## Motivation
 This project was developed to make it easier for organizations leveraging CyberArk PAS to monitor the application performance from a centralized single pane of glass.
 
 ## Build Status
@@ -31,51 +31,53 @@ Beta v1.0 - Under Construction
 
 ## Installation & Configuration
 ### Vault Server(s) Configuration Steps:
-1. Copy PAS-APM-Vault.ps1 to Vault Server(s)
-2. Configure PAS-APM-Vault.ps1 to run as a scheduled task that runs every minute, indefinetly
-3. Create non-standard firewall rule to allow outbound UDP traffic for the powershell script to send SYSLOG traffic out ONLY to the SIEM server
-4. Modify the PAS-APM-Vault.ps1 to use whatever SIEM server/port information is appropriate for your configuraiton
+1. Copy [PAS-APM-Vault.ps1](PowerShell%20Scripts/PAS-APM-Vault.ps1) to Vault Server(s)
+2. Configure [PAS-APM-Vault.ps1](PowerShell%20Scripts/PAS-APM-Vault.ps1) to run as a scheduled task that runs every minute, indefinetly
+3. Create non-standard firewall rule to allow outbound `UDP` traffic for the powershell script to send `SYSLOG` traffic out ONLY to the SIEM server
+4. Modify the [PAS-APM-Vault.ps1](PowerShell%20Scripts/PAS-APM-Vault.ps1) to use whatever SIEM server/port information is appropriate for your configuraiton
 5. Run the scheduled task and vadlidate that Splunk is receving the syslogs
 6. If not already done, enable "Vault Monitor" syslog messages to be sent from your Vault Server(s)
 
 ### Component Server(s) Configuration Steps:
-1. Copy PAS-APM-Components.ps1 to the Component Server(s)
-2. Configure the PAS-APM-Components.ps1 to run as a scheduled task that runs every minute, indefinetly 
-3. Modify the PAS-APM-Components.ps1 to only monitor for the required services on that component server (e.g. remove PSM relevant monitors for non-PSM servers, etc)
+1. Copy [PAS-APM-Components.ps1](PowerShell%20Scripts/PAS-APM-Components.ps1) to the Component Server(s)
+2. Configure the [PAS-APM-Components.ps1](PowerShell%20Scripts/PAS-APM-Components.ps1) to run as a scheduled task that runs every minute, indefinetly 
+3. Modify the [PAS-APM-Components.ps1](PowerShell%20Scripts/PAS-APM-Components.ps1) to only monitor for the required services on that component server (e.g. remove PSM relevant monitors for non-PSM servers, etc)
 4. Run the scheduled task and validate that Splunk is receiving the syslogs
 
 ### PTA Server Configuration Steps
-1. Be sure to configure the PTA server to send SYSLOGs outbound to Splunk per docs.cyberark.com instructions
+1. Be sure to configure the PTA server to send SYSLOGs outbound to Splunk per [docs.cyberark.com](https://docs.cyberark.com) instructions
 
 ### Splunk Configuration Steps:
 1. Validate that Splunk is receiving the syslog messages from all the Vaults/Components
 2. Once you have validated Splunk is reciving the messages, for you will need to define the Field names for the values in the syslog messages
-3. For incoming syslog messages, create custom Fields based on the following names/format: Format|Vendor|Product|Version|Info1|Info2|Info3|Info4|Info5|Info6|Info7|Info8|Info9|Info10|Info11|Info12
+3. For incoming syslog messages, create custom Fields based on the following names/format: `Format|Vendor|Product|Version|Info1|Info2|Info3|Info4|Info5|Info6|Info7|Info8|Info9|Info10|Info11|Info12`
 5. Click on "Dashboards" in Splunk
 6. Click on "Create New Dashboard"
 7. Enter the following title for each Dashboard:
-8. CyberArk Performance Monitoring Dashboard: VAULT
-9. CyberArk Performance Monitoring Dashboard: PVWA
-10. CyberArk Performance Monitoring Dashboard: CPM
-11. CyberArk Performance Monitoring Dashboard: PSM
-12. CyberArk Performance Monitoring Dashboard: PVWA
-13. CyberArk Privileged Threat Analytics Dashboard
+8. CyberArk Performance Monitoring Dashboard: `VAULT`
+9. CyberArk Performance Monitoring Dashboard: `PVWA`
+10. CyberArk Performance Monitoring Dashboard: `CPM`
+11. CyberArk Performance Monitoring Dashboard: `PSM`
+12. CyberArk Performance Monitoring Dashboard: `PVWA`
+13. CyberArk Privileged Threat Analytics Dashboard: `PTA`
 14. Click "Create Dashboard"
 15. Click the "Source' button in the top left hand corner of the dashboard to modify the source code
 16. Copy the source code from the corresponding .XML file and override all of the existing dashboard code
 17. Click "Save" in the top right hand corner
+
 #### Note:
-1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the "UseLegacySyslogFormat" to Yes for the Splunk configuraiton in your dbparm.ini file on the Vault server(s).
+1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the `UseLegacySyslogFormat` to `Yes` for the Splunk configuraiton in your `dbparm.ini` file on the Vault server(s).
 2. If you're having issues with identifying field names for the various types of monitors, create a custom field for each monitor type formatted the same way as mentioned in the Splunk configuration steps.
 
 ## How To Use These Dashboards
-These dashboards are designed to provide meaningful application performance monitoring information for the CyberArk PAS solution. Dashboards are broken up into three sections, (1) Service Status, (2) Hardware Performance Monitors, and (3) Applicaiton Performance Metrics. Each of these dashboards and the data they contain are unique to the component of the CyberArk PAS solution they're designed to monitor.
+These dashboards are designed to provide meaningful application performance monitoring information for the CyberArk PAS solution. Dashboards are broken up into three sections, (1) Service Status, (2) Hardware Performance Monitors, and (3) Application Performance Metrics. Each of these dashboards and the data they contain are unique to the component of the CyberArk PAS solution they're designed to monitor.
 
 **Service Status:** The service status panels will provide information on the key services related to that component, including a color indiciator to determine whether the service is up or down quickly and the current service status.
 
-**Hardware Performance Monitors:** The hardware performance monitor panels show CPU Usage %, Memory Usage % and Disk Space Usage over a period of time and the current level. It too includes a color incidator to detmeine whether there is an immedaite issue that requires attention.
+**Hardware Performance Monitors:** The hardware performance monitor panels show `CPU Usage %`, `Memory Usage %` and `Disk Space Usage` over a period of time and the current level. It, too, includes a color incidator to detmeine whether there is an immedaite issue that requires attention.
 
 **Application Metrics:** The application metrics will vary depending on the component being monitored, but may contain information such as average/max times/tasks, transcation information, session counts, error counts and other important information. For more information on each of these panels view the XML file source code or click the search icon to view the raw data within Splunk.
+
 #### Note:
 The PTA Dashboard only contains application metrics (relevant threat analytics information), including severity, recent events and trends. It does not contain service status or hardware monitors.
 
@@ -91,4 +93,4 @@ The data is being fed into Splunk at near real-time, at one-minute intervals fro
 6. **LogonMonitorCount/LogonMonitorRecent:** These are OS level user authentication monitors generated by the PowerShell Scripts for the Vault(s). This requires the PowerShell Script/Scheduled Task to be running in order to send logs.
 
 ## Credits
-Many thanks to Joe Garcia, Mark DiFilippo, Jeff Vealy, Kevin Naglich, Sean May, Chris Maroun, Noam Liran for the assitance and feedback along the way.
+Many thanks to Joe Garcia, Mark DiFilippo, Jeff Vealey, Kevin Naglich, Sean May, Chris Maroun, Noam Liran for the assistance and feedback along the way.
