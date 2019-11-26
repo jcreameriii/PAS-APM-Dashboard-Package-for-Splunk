@@ -1,0 +1,179 @@
+<dashboard>
+  <label>CyberArk Privileged Threat Analytics Dashboard</label>
+  <description>This dashboard displays key PTA threat information, including severity, recent events and trends.</description>
+  <row>
+    <panel>
+      <title>Privileged Threats by Severity</title>
+      <chart>
+        <search>
+          <query>host="10.0.1.210" | eval Risk = if(Info3 &gt; 6, "HIGH", if (Info3 &lt; 3, "LOW", "MEDIUM")) | stats count(Risk) by Risk</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.seriesColors">[0xdc4e41,0x006d9c,0xf8be34]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Privileged Threats by Severity</title>
+      <table>
+        <search>
+          <query>host="10.0.1.210" | eval Risk = if(Info3 &gt; 6, "HIGH", if (Info3 &lt; 3, "LOW", "MEDIUM")) | stats count(Risk) by Risk</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="Info2">
+          <colorPalette type="map">{"HIGH":#DC4E41,"MEDIUM":#F1813F,"LOW":#F8BE34}</colorPalette>
+        </format>
+        <format type="number" field="count(Info2)">
+          <option name="precision">0</option>
+          <option name="unit">Events</option>
+        </format>
+        <format type="color" field="Info3">
+          <colorPalette type="list">[#F8BE34,#F1813F,#DC4E41]</colorPalette>
+          <scale type="threshold">2.9,6.9</scale>
+        </format>
+        <format type="color" field="Risk">
+          <colorPalette type="map">{"HIGH":#DC4E41,"MEDIUM":#F8BE34,"LOW":#006D9C}</colorPalette>
+        </format>
+        <format type="color" field="wd">
+          <colorPalette type="map">{"HIGH":#DC4E41,"MEDIUM":#F8BE34,"LOW":#006D9C}</colorPalette>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>Privileged Threats Events Plotted (Today)</title>
+      <chart>
+        <search>
+          <query>host="10.0.1.210" | eval Risk = if(Info3 &gt; 6, "HIGH", if (Info3 &lt; 3, "LOW", "MEDIUM")) | timechart span=1m values(Info3) by Risk</query>
+          <earliest>-6h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Risk Score</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.seriesColors">[0xdc4e41,0x006d9c,0xf8be34]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Privileged Threats by Threat (Last 7 Days)</title>
+      <chart>
+        <search>
+          <query>host="10.0.1.210" | eval Risk = if(Info3 &gt; 6, "HIGH", if (Info3 &lt; 3, "LOW", "MEDIUM")) 
+| rename Info2 as "Alert Name"
+| rename cs2 as "Event ID"| stats count(Risk) by "Alert Name"</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Privileged Threat Trends (Last 7 Days)</title>
+      <single>
+        <search>
+          <query>host="10.0.1.210" | eval Risk = if(Info3 &gt; 6, "HIGH", if (Info3 &lt; 3, "LOW", "MEDIUM")) 
+| rename Info2 as "Alert Name"
+| rename cs2 as "Event ID"| timechart count(Risk)</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trendColorInterpretation">inverse</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="trendInterval">-7d</option>
+        <option name="unit">Threats</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Privileged Threat Count Trends (Last 7 Days)</title>
+      <chart>
+        <search>
+          <query>host="10.0.1.210" | eval Risk = if(Info3 &gt; 6, "HIGH", if (Info3 &lt; 3, "LOW", "MEDIUM")) | timechart span=1d count(Info3) by Risk</query>
+          <earliest>-7d@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Count of Risky Actions</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.seriesColors">[0xdc4e41,0x006d9c,0xf8be34]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Privileged Threats Table Feed</title>
+      <table>
+        <search>
+          <query>host="10.0.1.210" | eval Risk = if(Info3 &gt; 6, "HIGH", if (Info3 &lt; 3, "LOW", "MEDIUM"))
+| rename Info3 as "Score" 
+| rename Info2 as "Alert Name"
+| rename Info4 as "Alert Details"
+| rename cs3 as "Link"
+| rename suser as "End User" | rename shost as "End User Machine"
+| rename duser as "Target User" 
+| rename dhost as "Target Machine" 
+| rename cs2 as "Event ID"
+| table "_time", "Alert Name", "Risk", "End User", "End User Machine", "Target User", "Target Machine", "Event ID","Link"</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="wrap">false</option>
+        <format type="number" field="Risk"></format>
+        <format type="color" field="Risk">
+          <colorPalette type="map">{"HIGH":#DC4E41,"MEDIUM":#F8BE34,"LOW":#006D9C}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+</dashboard>
