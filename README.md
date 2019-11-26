@@ -18,6 +18,9 @@ CyberArk Privileged Access Security Application Performance Monitoring (APM) Das
 3. Modify the PAS-APM-Components.ps1 to only monitor for the required services on that component server (e.g. remove PSM relevant monitors for non-PSM servers, etc)
 4. Run the scheduled task and validate that Splunk is receiving the syslogs
 
+**PTA Server Configuration Steps**
+1. Be sure to configure the PTA server to send SYSLOGs outbound to Splunk per docs.cyberark.com instructions
+
 **Splunk Configuration Steps:**
 1. Validate that Splunk is receiving the syslog messages from all the Vaults/Components
 2. Once you have validated Splunk is reciving the messages, for you will need to define the Field names for the values in the syslog messages
