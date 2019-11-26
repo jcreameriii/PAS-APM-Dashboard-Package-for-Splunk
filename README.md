@@ -11,6 +11,9 @@ Beta v1.0
 **Vault Dashboard:**
 ![Vault Dashboard](/Screenshots/PAS-APM-Vault-Screenshot.PNG)
 
+**PTA Dashboard:**
+![PVWA Dashboard](/Screenshots/PAS-APM-PTA-Screenshot.PNG)
+
 **CPM Dashboard:**
 ![CPM Dashboard](/Screenshots/PAS-APM-CPM-Screenshot.PNG)
 
@@ -19,9 +22,6 @@ Beta v1.0
 
 **PVWA Dashboard:**
 ![PVWA Dashboard](/Screenshots/PAS-APM-PVWA-Screenshot.PNG)
-
-**PTA Dashboard:**
-![PVWA Dashboard](/Screenshots/PAS-APM-PTA-Screenshot.PNG)
 
 **Vault Server(s) Configuration Steps:**
 1. Copy PAS-APM-Vault.ps1 to Vault Server(s)
