@@ -50,13 +50,12 @@ Beta v1.0 - Under Construction
 ### Splunk Configuration Steps:
 1. Validate that Splunk is receiving the syslog messages from all the Vaults/Components
 2. Once you have validated Splunk is reciving the messages, for you will need to define the Field names for the values in the syslog messages
-3. For the PowerShell-based messages, create custom Fields based on the following names/format: "DateTime, HostName, ServiceName, ServiceStatus, ServiceStatusNumeric, ServiceStatusNumeric2"
-4. For the VaultMonitor messages, create custom Fields based on the following names/format: Format|Vendor|Product|Version|AverageExecutionTime|MaxExecutionTime|AverageQueueTime|MaxQueueTime|NumberOfParalleTasks|MaxParallelTasks|TransactionCount|CPUUsage|MemoryUsage|DriveFreeSpaceInGB|DriveTotalSpaceInGB
+3. For incoming syslog messages, create custom Fields based on the following names/format: Format|Vendor|Product|Version|Info1|Info2|Info3|Info4|Info5|Info6|Info7|Info8|Info9|Info10|Info11|Info12
 5. Click on "Dashboards" in Splunk
 6. Click on "Create New Dashboard"
 7. Enter the following title for each Dashboard:
 8. CyberArk Performance Monitoring Dashboard: VAULT
-9. yberArk Performance Monitoring Dashboard: PVWA
+9. CyberArk Performance Monitoring Dashboard: PVWA
 10. CyberArk Performance Monitoring Dashboard: CPM
 11. CyberArk Performance Monitoring Dashboard: PSM
 12. CyberArk Performance Monitoring Dashboard: PVWA
@@ -66,18 +65,19 @@ Beta v1.0 - Under Construction
 16. Copy the source code from the corresponding .XML file and override all of the existing dashboard code
 17. Click "Save" in the top right hand corner
 
-**How do I use these dashboards?**
+**Note**
+1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the "UseLegacySyslogFormat" to Yes for the Splunk configuraiton in your dbparm.ini file on the Vault server(s).
+2. If you're having issues with identifying field names for the various types of monitors, create a custom field for each monitor type formatted the same way as mentioned in the Splunk configuration steps.
+
+## How To Use These Dashboards
 These dashboards are designed to provide meaningful application performance monitoring information for the CyberArk PAS solution. Dashboards are broken up into three sections, (1) Service Status, (2) Hardware Performance Monitors, and (3) Applicaiton Performance Metrics. Each of these dashboards and the data they contain are unique to the component of the CyberArk PAS solution they're designed to monitor.
-(1) Service Status: The service status panels will provide information on the key services related to that component, including a color indiciator to determine whether the service is up or down quickly and the current service status.
-(2) Hardware Performance Monitors: The hardware performance monitor panels show CPU Usage %, Memory Usage % and Disk Space Usage over a period of time and the current level. It too includes a color incidator to detmeine whether there is an immedaite issue that requires attention.
-(3) Application Performance Metrics: The application performance metrics will vary depending on the component being monitored, but may contain information such as average/max times/tasks, transcation information, session counts, error counts and other important information. For more information on each of these panels view the XML file source code or click the search icon to view the raw data within Splunk.
-(4) The PTA Dashboard only contains relevant threat analytics information including severity, recent events and trends.
+**(1) Service Status:** The service status panels will provide information on the key services related to that component, including a color indiciator to determine whether the service is up or down quickly and the current service status.
+**(2) Hardware Performance Monitors:** The hardware performance monitor panels show CPU Usage %, Memory Usage % and Disk Space Usage over a period of time and the current level. It too includes a color incidator to detmeine whether there is an immedaite issue that requires attention.
+**(3) Application Metrics:** The application metrics will vary depending on the component being monitored, but may contain information such as average/max times/tasks, transcation information, session counts, error counts and other important information. For more information on each of these panels view the XML file source code or click the search icon to view the raw data within Splunk.
+**Note:** The PTA Dashboard only contains application metrics (relevant threat analytics information), including severity, recent events and trends. It does not contain service status or hardware monitors.
 
 **How often do the dashboards update?**
 The data is being fed into Splunk at near real-time, at one-minute intervals from the Vault and Component servers. The dashboards themselves are configured to refresh each panel query every 30 seconds.
-
-**Note**
-1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the "UseLegacySyslogFormat" to Yes for the Splunk configuraiton in your dbparm.ini file on the Vault server(s).
 
 **Types of Monitors**
 1. Vault: These are Vault Audit Action Codes generated by the CyberArk Solution - This requires the PrivateArk Server Service to be online in order to send logs
@@ -86,3 +86,6 @@ The data is being fed into Splunk at near real-time, at one-minute intervals fro
 4. HardwareMonitor: These are hardware stat  monitors generated by the PowerShell Scripts for the Component Server(s) - This requires the PowerShell Script/Scheduled Task to be running in order to send logs
 5. LogonMonitorCount/LogonMonitorRecent: These are OS level user authentication monitors generated by the PowerShell Scripts for the Vault(s) - This requires the PowerShell Script/Scheduled Task to be running in order to send logs
 6. PTA: These are PTA alert events generated by the CyberArk solution - This requires the PTA Service to be online in order to send these logs
+
+## Credits
+Many thanks to Joe Garcia, Mark DiFilipo, Jeff Vealy, Kevin Naglich, Sean May, Chris Maroun, Noam Liran for the assitance and feedback along the way.
