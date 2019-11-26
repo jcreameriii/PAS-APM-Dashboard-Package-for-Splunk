@@ -64,7 +64,7 @@ Beta v1.0 - Under Construction
 15. Click the "Source' button in the top left hand corner of the dashboard to modify the source code
 16. Copy the source code from the corresponding .XML file and override all of the existing dashboard code
 17. Click "Save" in the top right hand corner
-**Note:**
+#### Note:####
 1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the "UseLegacySyslogFormat" to Yes for the Splunk configuraiton in your dbparm.ini file on the Vault server(s).
 2. If you're having issues with identifying field names for the various types of monitors, create a custom field for each monitor type formatted the same way as mentioned in the Splunk configuration steps.
 
