@@ -60,7 +60,7 @@
       <chart>
         <search>
           <query>host="10.0.1.210" | eval Risk = if(Info3 &gt; 6, "HIGH", if (Info3 &lt; 3, "LOW", "MEDIUM")) | timechart span=1m values(Info3) by Risk</query>
-          <earliest>-6h@h</earliest>
+          <earliest>@d</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
           <refreshType>delay</refreshType>
