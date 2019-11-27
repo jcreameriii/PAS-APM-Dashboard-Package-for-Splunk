@@ -11,7 +11,9 @@ $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "Cyberark Password Manager" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "Cyberark Password Manager" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$SoftwareName = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object DisplayName -like "*Central Policy Manager*" | Select-Object DisplayName | Select -first 1 | Format-Table -HideTableHeaders | Out-String
+$SoftwareVersion = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object DisplayName -like "*Central Policy Manager*" | Select-Object DisplayVersion | Select -first 1 | Format-Table -HideTableHeaders | Out-String
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|$SoftwareName|$SoftwareVersion"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -27,7 +29,7 @@ $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "Cyberark Central Policy Manager Scanner" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "Cyberark Central Policy Manager Scanner" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -59,7 +61,9 @@ $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "Cyber-Ark Privileged Session Manager" | Format-Table -HideTableHeaders Name | Out-String
 $ServiceStatus = Get-Service "Cyber-Ark Privileged Session Manager" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$SoftwareName = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object DisplayName -like "*Privileged Session Manager*" | Select-Object DisplayName | Select -first 1 | Format-Table -HideTableHeaders | Out-String
+$SoftwareVersion = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object DisplayName -like "*Privileged Session Manager*" | Select-Object DisplayVersion | Select -first 1 | Format-Table -HideTableHeaders | Out-String
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|$SoftwareName|$SoftwareVersion"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -75,7 +79,9 @@ $MonitorType = "ApplicationMonitor"
 $ServiceName = Get-Service "W3SVC" | Format-Table -HideTableHeaders DisplayName | Out-String
 $ServiceStatus = Get-Service "W3SVC" | Format-Table -HideTableHeaders Status | Out-String
     If ($ServiceStatus -like "*Running*") { $ServiceStatusNumeric = 1 } else { $ServiceStatusNumeric = 0 }
-$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|"
+$SoftwareName = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object DisplayName -like "*Password Vault Web Access*" | Select-Object DisplayName | Select -first 1 | Format-Table -HideTableHeaders | Out-String
+$SoftwareVersion = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object DisplayName -like "*Password Vault Web Access*" | Select-Object DisplayVersion | Select -first 1 | Format-Table -HideTableHeaders | Out-String
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$ServiceName|$ServiceStatus|$ServiceStatusNumeric|$SoftwareName|$SoftwareVersion"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
@@ -133,6 +139,23 @@ $FreeSpaceGBDecimal = $FreeSpace / 1073741824
 $TotalSpaceGB = [math]::Round($TotalSpaceGBDecimal,1)
 $FreeSpaceGB = [math]::Round($FreeSpaceGBDecimal,1)
 $syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$CPU|$Memory|$TotalSpaceGB|$FreeSpaceGB"
+#cleanup command to remove new lines and carriage returns
+$syslogoutputclean = $syslogoutput -replace "`n|`r"
+$syslogoutputclean | ConvertTo-Json
+#send syslog to SIEM
+$UDPCLient = New-Object System.Net.Sockets.UdpClient
+$UDPCLient.Connect($SYSLOGSERVER, $PORT)
+$Encoding = [System.Text.Encoding]::ASCII
+$ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
+$UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
+
+#OS System Information
+$MonitorType = "OSMonitor"
+$OSName = (Get-WmiObject Win32_OperatingSystem).Caption | Out-String
+$OSVersion = (Get-WmiObject Win32_OperatingSystem).Version | Out-String
+$OSServPack = (Get-WmiObject Win32_OperatingSystem).ServicePackMajorVersion | Out-String
+$OSArchitecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture | Out-String
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|$OSName|$OSVersion|$OSServPack|$OSArchitecture"
 #cleanup command to remove new lines and carriage returns
 $syslogoutputclean = $syslogoutput -replace "`n|`r"
 $syslogoutputclean | ConvertTo-Json
