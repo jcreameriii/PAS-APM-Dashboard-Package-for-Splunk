@@ -1,0 +1,503 @@
+<dashboard>
+  <label>CyberArk Performance Monitoring Dashboard: All-In-One</label>
+  <description>This dashboard displays key Digital Vault, Component Server and Application performance information, including service status, OS information, CPU usage, memory usage, disk space, execution time, queue time, task and transaction count information.</description>
+  <row>
+    <panel>
+      <title>CyberArk Service Status</title>
+      <table>
+        <search>
+          <query>host="10.0.1.10" OR host="10.0.1.12" Product="ApplicationMonitor" NOT Info2="Remote Desktop User Sessions" 
+| rename Info2 as "Service Name" 
+| rename Info3 as "Service Status" 
+| rename host as "IP Address"
+| rename Info1 as "Host" 
+| table "IP Address", "Host", "Service Name", "Service Status", "_time" 
+| dedup "Service Name"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">100</option>
+        <option name="drilldown">none</option>
+        <format type="number" field="Service Status"></format>
+        <format type="color" field="Service Status">
+          <colorPalette type="map">{"Running":#53a051, "Stopped":"0xdc4e41", "StartPending":"0xdc4e41"}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CyberArk Software Version Information</title>
+      <table>
+        <search>
+          <query>host="10.0.1.10" OR host="10.0.1.12" Product="ApplicationMonitor" 
+| rename host as "IP Address"
+| rename Info1 as "Host" 
+| rename Info5 as "Software Name" 
+| rename Info6 as "Software Version"
+| table "IP Address", "Host", "Software Name", "Software Version"
+| dedup "Software Name"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Hardware Performance Monitors: VAULT</title>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CPU Usage % (Current)</title>
+      <single>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor | stats first(Info8)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xf1813f","0x006d9c","0xdc4e41"]</option>
+        <option name="rangeValues">[50,70,85,170]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">%</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Memory Usage % (Current)</title>
+      <single>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor | stats first(Info9)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[50,70,85]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">%</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Disk Space Free (GB) (Current)</title>
+      <single>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor | stats first(Info10)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="height">115</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0xdc4e41","0xf8be34","0x53a051"]</option>
+        <option name="rangeValues">[10,20]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">GB</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>System Information</title>
+      <table>
+        <search>
+          <query>host="10.0.1.10" Product="OSMonitor"
+| rename host as "IP Address"
+| rename Info1 as "Host" 
+| rename Info2 as "OSName" 
+| rename Info3 as "OSVersion" 
+| rename Info5 as "OSArch"
+| table "Host", "IP Address", "OSName", "OSVersion", "OSArch"
+| dedup "Host" 
+| transpose 
+| rename column as Label
+| rename "row 1" as Value</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CPU Usage % (Today)</title>
+      <chart>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor| timechart span=1m values(Info8)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">CPU Usage (%)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Memory Usage % (Today)</title>
+      <chart>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor| timechart span=1m values(Info9)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Memory Usage (%)</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Disk Space Utilization (Total vs. Free) (Today)</title>
+      <chart>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor| timechart span=1m values(Info10) values(Info11)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Storage Space (GB)</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.seriesColors">[0x53A051,0x999999]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Hardware Performance Monitors: COMPONENTS</title>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CPU Usage % (Current)</title>
+      <single>
+        <search>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info2)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xf1813f","0x006d9c","0xdc4e41"]</option>
+        <option name="rangeValues">[50,70,85,170]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">%</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Memory Usage % (Current)</title>
+      <single>
+        <search>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info3)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[50,70,85]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">%</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Disk Space Free (GB) (Current)</title>
+      <single>
+        <search>
+          <query>host=10.0.1.12 hardwaremonitor | stats first(Info5)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="height">114</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0xdc4e41","0xf8be34","0x53a051"]</option>
+        <option name="rangeValues">[10,20]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">GB</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>System Information</title>
+      <table>
+        <search>
+          <query>host="10.0.1.12" Product="OSMonitor"
+| rename host as "IP Address"
+| rename Info1 as "Host" 
+| rename Info2 as "OSName" 
+| rename Info3 as "OSVersion" 
+| rename Info5 as "OSArch"
+| table "Host", "IP Address", "OSName", "OSVersion", "OSArch"
+| dedup "Host" 
+| transpose 
+| rename column as Label
+| rename "row 1" as Value</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CPU Usage % (Last 24 Hours)</title>
+      <chart>
+        <search>
+          <query>host=10.0.1.12 hardwaremonitor 
+|  timechart span=1m values(Info2)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">CPU Usage (%)</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Memory Usage % (Last 24 Hours)</title>
+      <chart>
+        <search>
+          <query>host=10.0.1.12 hardwaremonitor 
+|  timechart span=1m values(Info3)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Memory Usage (%)</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Disk Space Utilization (Total vs. Free) (Last 24 Hours)</title>
+      <chart>
+        <search>
+          <query>host=10.0.1.12 hardwaremonitor | timechart span=1m values(Info5) values(Info4)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Storage Space (GB)</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.seriesColors">[0x53A051,0x999999]</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PrivateArk Server Application Performance Metrics</title>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average and Max Execution Time (Today)</title>
+      <chart>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor| timechart span=1m values(Info1) values(Info2)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Execution Time (ms)</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Average and Max Queue Time (Today)</title>
+      <chart>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor| timechart span=1m values(Info3) values(Info4)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Queue Time</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Current and Max Parallel Tasks (Today)</title>
+      <chart>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor| timechart span=1m values(Info5) values(Info6)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Parallel Tasks</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Transaction Count (Today)</title>
+      <chart>
+        <search>
+          <query>sourcetype=syslog Product=VaultMonitor| timechart span=1m values(Info7)</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Transaction Count</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</dashboard>
