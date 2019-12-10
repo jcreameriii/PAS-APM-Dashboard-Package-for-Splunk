@@ -53,9 +53,9 @@ Beta v1.1 - Under Construction
 ### Splunk Configuration Steps:
 1. Validate that Splunk is receiving the syslog messages from all the Vaults/Components
 2. Once you have validated Splunk is reciving the messages, for you will need to define the Field names for the values in the syslog messages
-3. To create the custom Fields, search for `*Monitor` for all CyberArk sources and click `Extract New Fields`.
-4. Click on `VaultMonitor` event to extract the fields. Select the `Delimiters` method using the pipe `|`.
-5. Rename `field1` through `field16` as: `Format|Vendor|Product|Version|Info1|Info2|Info3|Info4|Info5|Info6|Info7|Info8|Info9|Info10|Info11|Info12`
+3. To create the custom Fields, search for `*Monitor` for all CyberArk sources and click `+Extract New Fields`.
+4. Click on `VaultMonitor` event to extract the fields. Select the `Delimiters` method and use the pipe `|`.
+5. Rename `field1` through `field16` as follows: `Format|Vendor|Product|Version|Info1|Info2|Info3|Info4|Info5|Info6|Info7|Info8|Info9|Info10|Info11|Info12`
 6. Click on "Dashboards" in Splunk
 7. Click on "Create New Dashboard"
 8. Enter the following title for each Dashboard:
