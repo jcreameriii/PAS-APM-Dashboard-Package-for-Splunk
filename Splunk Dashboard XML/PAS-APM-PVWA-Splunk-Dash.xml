@@ -223,7 +223,7 @@
         </search>
         <option name="charting.axisTitleX.text">Time</option>
         <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.text">Concurrent PSM Sessions</option>
+        <option name="charting.axisTitleY.text">PVWA Logon Actions</option>
         <option name="charting.axisTitleY.visibility">visible</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
         <option name="charting.chart">line</option>
