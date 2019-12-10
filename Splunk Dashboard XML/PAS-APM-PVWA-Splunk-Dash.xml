@@ -211,6 +211,45 @@
   </row>
   <row>
     <panel>
+      <title>PVWA Synthetic Transaction Monitoring (Recent)</title>
+      <table>
+        <search>
+          <query>Product=SythenticTransactionMonitor 
+| rename Info1 as "URL"
+| rename Info2 as "HTTP Status"
+| rename Info3 as "Response Time"
+|  table Product, URL, "HTTP Status", "Response Time", _time
+| dedup "URL"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="HTTP Status">
+          <colorPalette type="map">{"200":#53A051,"404":#DC4E41}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PVWA Synthetic Transaction Monitoring Response Time (ms)</title>
+      <chart>
+        <search>
+          <query>Product=SythenticTransactionMonitor |  timechart span=1m values(Info3)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>        </search>
+        <option name="charting.axisTitleY.text">Response Time (ms)</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <title>PVWA Logon Activity (Today)</title>
       <chart>
         <search>
@@ -223,10 +262,10 @@
         </search>
         <option name="charting.axisTitleX.text">Time</option>
         <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.text">PVWA Logon Actions</option>
+        <option name="charting.axisTitleY.text">Concurrent PSM Sessions</option>
         <option name="charting.axisTitleY.visibility">visible</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
-        <option name="charting.chart">line</option>
+        <option name="charting.chart">area</option>
         <option name="charting.chart.nullValueMode">connect</option>
         <option name="charting.drilldown">none</option>
         <option name="charting.legend.placement">none</option>
