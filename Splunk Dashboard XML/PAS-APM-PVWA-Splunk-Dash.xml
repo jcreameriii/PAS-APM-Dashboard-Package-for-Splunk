@@ -230,21 +230,23 @@
       </table>
     </panel>
   </row>
-  <row>
+ <row>
     <panel>
       <title>PVWA Synthetic Transaction Monitoring Response Time (ms)</title>
       <chart>
         <search>
-          <query>Product=SythenticTransactionMonitor |  timechart span=1m values(Info3)</query>
+          <query>Product=SythenticTransactionMonitor |  timechart span=1m values(Info3) by Info1</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <refresh>30s</refresh>
-          <refreshType>delay</refreshType>        </search>
+          <refreshType>delay</refreshType>
+        </search>
         <option name="charting.axisTitleY.text">Response Time (ms)</option>
         <option name="charting.chart">area</option>
         <option name="charting.chart.nullValueMode">connect</option>
         <option name="charting.drilldown">none</option>
-        <option name="charting.legend.placement">none</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
   </row>
