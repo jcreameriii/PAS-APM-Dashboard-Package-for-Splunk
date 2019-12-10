@@ -165,3 +165,87 @@ $UDPCLient.Connect($SYSLOGSERVER, $PORT)
 $Encoding = [System.Text.Encoding]::ASCII
 $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
+
+#Synthetic Transaction Monitor for PVWA (/v10/logon)
+$MonitorType = "SythenticTransactionMonitor"
+$stopwatch = New-Object System.Diagnostics.Stopwatch
+$stopwatch.Start()
+$pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/logon"
+$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing | Format-Table -HideTableHeaders StatusCode | Out-String
+Write-Host $httpcheck
+    If ($httpcheck -like "*200*") { $httpstatus = 200 } else { $httpstatus = 404 }
+$stopwatch.Stop()
+$stopwatchms = ($stopwatch.ElapsedMilliseconds / 1000)
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$pvwaurl|$httpstatus|$stopwatchms|"
+#cleanup command to remove new lines and carriage returns
+$syslogoutputclean = $syslogoutput -replace "`n|`r"
+$syslogoutputclean | ConvertTo-Json
+#send syslog to SIEM
+$UDPCLient = New-Object System.Net.Sockets.UdpClient
+$UDPCLient.Connect($SYSLOGSERVER, $PORT)
+$Encoding = [System.Text.Encoding]::ASCII
+$ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
+$UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
+
+#Synthetic Transaction Monitor for PVWA (/v10/logon)
+$MonitorType = "SythenticTransactionMonitor"
+$stopwatch = New-Object System.Diagnostics.Stopwatch
+$stopwatch.Start()
+$pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/cyberark"
+$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing | Format-Table -HideTableHeaders StatusCode | Out-String
+Write-Host $httpcheck
+    If ($httpcheck -like "*200*") { $httpstatus = 200 } else { $httpstatus = 404 }
+$stopwatch.Stop()
+$stopwatchms = ($stopwatch.ElapsedMilliseconds / 1000)
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$pvwaurl|$httpstatus|$stopwatchms|"
+#cleanup command to remove new lines and carriage returns
+$syslogoutputclean = $syslogoutput -replace "`n|`r"
+$syslogoutputclean | ConvertTo-Json
+#send syslog to SIEM
+$UDPCLient = New-Object System.Net.Sockets.UdpClient
+$UDPCLient.Connect($SYSLOGSERVER, $PORT)
+$Encoding = [System.Text.Encoding]::ASCII
+$ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
+$UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
+
+#Synthetic Transaction Monitor for PVWA (/v10/ldap)
+$MonitorType = "SythenticTransactionMonitor"
+$stopwatch = New-Object System.Diagnostics.Stopwatch
+$stopwatch.Start()
+$pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/ldap"
+$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing | Format-Table -HideTableHeaders StatusCode | Out-String
+Write-Host $httpcheck
+    If ($httpcheck -like "*200*") { $httpstatus = 200 } else { $httpstatus = 404 }
+$stopwatch.Stop()
+$stopwatchms = ($stopwatch.ElapsedMilliseconds / 1000)
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$pvwaurl|$httpstatus|$stopwatchms|"
+#cleanup command to remove new lines and carriage returns
+$syslogoutputclean = $syslogoutput -replace "`n|`r"
+$syslogoutputclean | ConvertTo-Json
+#send syslog to SIEM
+$UDPCLient = New-Object System.Net.Sockets.UdpClient
+$UDPCLient.Connect($SYSLOGSERVER, $PORT)
+$Encoding = [System.Text.Encoding]::ASCII
+$ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
+$UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
+
+#Synthetic Transaction Monitor for PVWA (/v10/radius)
+$MonitorType = "SythenticTransactionMonitor"
+$stopwatch = New-Object System.Diagnostics.Stopwatch
+$stopwatch.Start()
+$pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/radius"
+$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing | Format-Table -HideTableHeaders StatusCode | Out-String
+Write-Host $httpcheck
+    If ($httpcheck -like "*200*") { $httpstatus = 200 } else { $httpstatus = 404 }
+$stopwatch.Stop()
+$stopwatchms = ($stopwatch.ElapsedMilliseconds / 1000)
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$pvwaurl|$httpstatus|$stopwatchms|"
+#cleanup command to remove new lines and carriage returns
+$syslogoutputclean = $syslogoutput -replace "`n|`r"
+$syslogoutputclean | ConvertTo-Json
+#send syslog to SIEM
+$UDPCLient = New-Object System.Net.Sockets.UdpClient
+$UDPCLient.Connect($SYSLOGSERVER, $PORT)
+$Encoding = [System.Text.Encoding]::ASCII
+$ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
+$UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
