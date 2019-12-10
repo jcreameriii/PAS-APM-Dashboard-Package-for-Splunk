@@ -167,7 +167,7 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #Synthetic Transaction Monitor for PVWA (/v10/logon)
-$MonitorType = "SythenticTransactionMonitor"
+$MonitorType = "SyntheticTransactionMonitor"
 $stopwatch = New-Object System.Diagnostics.Stopwatch
 $stopwatch.Start()
 $pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/logon"
@@ -188,7 +188,7 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #Synthetic Transaction Monitor for PVWA (/v10/logon)
-$MonitorType = "SythenticTransactionMonitor"
+$MonitorType = "SyntheticTransactionMonitor"
 $stopwatch = New-Object System.Diagnostics.Stopwatch
 $stopwatch.Start()
 $pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/cyberark"
@@ -209,7 +209,7 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #Synthetic Transaction Monitor for PVWA (/v10/ldap)
-$MonitorType = "SythenticTransactionMonitor"
+$MonitorType = "SyntheticTransactionMonitor"
 $stopwatch = New-Object System.Diagnostics.Stopwatch
 $stopwatch.Start()
 $pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/ldap"
@@ -230,7 +230,7 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #Synthetic Transaction Monitor for PVWA (/v10/radius)
-$MonitorType = "SythenticTransactionMonitor"
+$MonitorType = "SyntheticTransactionMonitor"
 $stopwatch = New-Object System.Diagnostics.Stopwatch
 $stopwatch.Start()
 $pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/radius"
