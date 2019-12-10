@@ -74,6 +74,10 @@ Beta v1.1 - Under Construction
 #### Note:
 1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the `UseLegacySyslogFormat` to `Yes` for the Splunk configuraiton in your `dbparm.ini` file on the Vault server(s).
 2. If you're having issues with identifying field names for the various types of monitors, create a custom field for each monitor type formatted the same way as mentioned in the Splunk configuration steps.
+3. If you're having issues receiving the VaultMonitor records, be sure you've configured the Vault to send them per the documentation. If you're still having issues, make sure your translator file has the following XML code within it:
+`</xsl:for-each>
+	          <xsl:for-each select="syslog/monitor_record">CEF:0|<xsl:value-of select="Vendor"/>|<xsl:value-of select="Product"/>|<xsl:value-of select="Version"/>|<xsl:value-of select="AverageExecutionTime"/>|<xsl:value-of select="MaxExecutionTime"/>|<xsl:value-of select="AverageQueueTime"/>|<xsl:value-of select="MaxQueueTime"/>|<xsl:value-of select="NumberOfParallelTasks"/>|<xsl:value-of select="MaxParallelTasks"/>|<xsl:value-of select="TransactionCount"/>|<xsl:value-of select="CPUUsage"/>|<xsl:value-of select="MemoryUsage"/>|<xsl:value-of select="DriveFreeSpaceInGB"/>|<xsl:value-of select="DriveTotalSpaceInGB"/>|<xsl:value-of select="SyslogQueueSize"/>
+      </xsl:for-each>`
 
 ## How To Use These Dashboards
 These dashboards are designed to provide meaningful application performance monitoring information for the CyberArk PAS solution. Dashboards are broken up into three sections, (1) Service Status, (2) Hardware Performance Monitors, and (3) Application Performance Metrics. Each of these dashboards and the data they contain are unique to the component of the CyberArk PAS solution they're designed to monitor.
