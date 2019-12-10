@@ -53,21 +53,23 @@ Beta v1.1 - Under Construction
 ### Splunk Configuration Steps:
 1. Validate that Splunk is receiving the syslog messages from all the Vaults/Components
 2. Once you have validated Splunk is reciving the messages, for you will need to define the Field names for the values in the syslog messages
-3. For incoming syslog messages, create custom Fields based on the following names/format: `Format|Vendor|Product|Version|Info1|Info2|Info3|Info4|Info5|Info6|Info7|Info8|Info9|Info10|Info11|Info12`
-5. Click on "Dashboards" in Splunk
-6. Click on "Create New Dashboard"
-7. Enter the following title for each Dashboard:
-8. CyberArk Performance Monitoring Dashboard: `All-In-One`
-9. CyberArk Performance Monitoring Dashboard: `VAULT'
-10. CyberArk Performance Monitoring Dashboard: `PVWA`
-11. CyberArk Performance Monitoring Dashboard: `CPM`
-12. CyberArk Performance Monitoring Dashboard: `PSM`
-13. CyberArk Performance Monitoring Dashboard: `PVWA`
-14. CyberArk Privileged Threat Analytics Dashboard: `PTA`
-15. Click "Create Dashboard"
-16. Click the "Source' button in the top left hand corner of the dashboard to modify the source code
-17. Copy the source code from the corresponding .XML file and override all of the existing dashboard code
-18. Click "Save" in the top right hand corner
+3. To create the custom Fields, search for `*Monitor` for all CyberArk sources and click `Extract New Fields`.
+4. Click on `VaultMonitor` event to extract the fields. Select the `Delimiters` method using the pipe `|`.
+5. Rename `field1` through `field16` as: `Format|Vendor|Product|Version|Info1|Info2|Info3|Info4|Info5|Info6|Info7|Info8|Info9|Info10|Info11|Info12`
+6. Click on "Dashboards" in Splunk
+7. Click on "Create New Dashboard"
+8. Enter the following title for each Dashboard:
+9. CyberArk Performance Monitoring Dashboard: `All-In-One`
+10. CyberArk Performance Monitoring Dashboard: `VAULT`
+11. CyberArk Performance Monitoring Dashboard: `PVWA`
+12. CyberArk Performance Monitoring Dashboard: `CPM`
+13. CyberArk Performance Monitoring Dashboard: `PSM`
+14. CyberArk Performance Monitoring Dashboard: `PVWA`
+15. CyberArk Privileged Threat Analytics Dashboard: `PTA`
+16. Click "Create Dashboard"
+17. Click the "Source' button in the top left hand corner of the dashboard to modify the source code
+18. Copy the source code from the corresponding .XML file and override all of the existing dashboard code
+19. Click "Save" in the top right hand corner
 
 #### Note:
 1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the `UseLegacySyslogFormat` to `Yes` for the Splunk configuraiton in your `dbparm.ini` file on the Vault server(s).
