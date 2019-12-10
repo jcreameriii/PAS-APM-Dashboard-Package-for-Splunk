@@ -39,7 +39,7 @@ Beta v1.1 - Under Construction
 3. Create non-standard firewall rule to allow outbound `UDP` traffic for the powershell script to send `SYSLOG` traffic out ONLY to the SIEM server
 4. Modify the [PAS-APM-Vault.ps1](PowerShell%20Scripts/PAS-APM-Vault.ps1) to use whatever SIEM server/port information is appropriate for your configuraiton
 5. Run the scheduled task and vadlidate that Splunk is receving the syslogs
-6. If not already done, enable "Vault Monitor" syslog messages to be sent from your Vault Server(s) per [docs.cyberark.com](https://docs.cyberark.com/Product-Doc/OnlineHelp/PAS/Latest/en/Content/PASIMP/Integrating-with-SIEM-Applications.htm#MonitortheVaultinSIEMapplicationsusingSyslog)
+6. If not already done, enable "Vault Monitor" syslog messages to be sent from your Vault Server(s) per [docs.cyberark.com](https://docs.cyberark.com/Product-Doc/OnlineHelp/PAS/Latest/en/Content/PASIMP/Integrating-with-SIEM-Applications.htm#MonitortheVaultinSIEMapplicationsusingSyslog) instructions
 
 ### Component Server(s) Configuration Steps:
 1. Copy [PAS-APM-Components.ps1](PowerShell%20Scripts/PAS-APM-Components.ps1) to the Component Server(s)
