@@ -294,7 +294,7 @@
       <title>PSM Shadow Users Inventory List</title>
       <table>
         <search>
-          <query>Product="PSMShadowUser" 
+          <query>Product="PSMShadowUserMonitor" 
 | rename Info1 as UserName 
 | rename Info2 as VaultUser  
 | table UserName VaultUser _time 
