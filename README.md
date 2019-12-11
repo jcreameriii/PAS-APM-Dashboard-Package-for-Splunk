@@ -70,6 +70,8 @@ Beta v1.1 - Under Construction
 17. Click the "Source' button in the top left hand corner of the dashboard to modify the source code
 18. Copy the source code from the corresponding .XML file and override all of the existing dashboard code
 19. Click "Save" in the top right hand corner
+20. Update all the queries in the dashboard's to include the correct sources/hosts for your environment. They are defaulted to the values of the Devleopment lab they were built in. You can also modify these values in the XML source code prior to creating the dashboards.
+21. Test and troubleshoot as necessary.
 
 #### Note:
 1. If you're having issues with timestamps in Splunk being zulu time but are being viewed as though they are in your local time, change the `UseLegacySyslogFormat` to `Yes` for the Splunk configuraiton in your `dbparm.ini` file on the Vault server(s).
