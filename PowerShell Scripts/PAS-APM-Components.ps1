@@ -249,3 +249,21 @@ $UDPCLient.Connect($SYSLOGSERVER, $PORT)
 $Encoding = [System.Text.Encoding]::ASCII
 $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
+
+#PSM Shadow User Monitor
+$MonitorType = "PSMShadowUser"
+$PSMShadowUsers = Get-LocalUser -Name *PSM-* | Select-Object Name,FullName
+ForEach ($name in $PSMShadowUsers) {
+$PSMShadowUserName = $name.Name
+$PSMShadowUserFullName = $name.FullName
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$PSMShadowUserName|$PSMShadowUserFullName"
+#cleanup command to remove new lines and carriage returns
+$syslogoutputclean = $syslogoutput -replace "`n|`r"
+$syslogoutputclean | ConvertTo-Json
+#send syslog to SIEM
+$UDPCLient = New-Object System.Net.Sockets.UdpClient
+$UDPCLient.Connect($SYSLOGSERVER, $PORT)
+$Encoding = [System.Text.Encoding]::ASCII
+$ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
+$UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
+}
