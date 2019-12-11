@@ -251,7 +251,7 @@ $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
 
 #PSM Shadow User Monitor
-$MonitorType = "PSMShadowUser"
+$MonitorType = "PSMShadowUserMonitor"
 $PSMShadowUsers = Get-LocalUser -Name *PSM-* | Select-Object Name,FullName
 ForEach ($name in $PSMShadowUsers) {
 $PSMShadowUserName = $name.Name
