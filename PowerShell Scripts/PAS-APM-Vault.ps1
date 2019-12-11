@@ -104,3 +104,19 @@ $UDPCLient.Connect($SYSLOGSERVER, $PORT)
 $Encoding = [System.Text.Encoding]::ASCII
 $ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
 $UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
+
+#Admin Logon Information
+$MonitorType = "LogonMonitor"
+$SID = (Get-WMIObject -Class Win32_UserAccount -Filter {LocalAccount = "True" and Name = "Administrator"} | Select * | Format-Table -HideTableHeaders SID | Out-String)
+$LastLogon = (net user Administrator | findstr /B /C:"Last logon")
+$LastLogon = $LastLogon -replace "Last logon                   "
+$syslogoutput = "$DateTime CEF:0|CyberArk|$MonitorType|$Version|$HostName|Administrator|$SID|$LastLogon"
+#cleanup command to remove new lines and carriage returns
+$syslogoutputclean = $syslogoutput -replace "`n|`r"
+$syslogoutputclean | ConvertTo-Json
+#send syslog to SIEM
+$UDPCLient = New-Object System.Net.Sockets.UdpClient
+$UDPCLient.Connect($SYSLOGSERVER, $PORT)
+$Encoding = [System.Text.Encoding]::ASCII
+$ByteSyslogMessage = $Encoding.GetBytes(''+$syslogoutputclean+'')
+$UDPCLient.Send($ByteSyslogMessage, $ByteSyslogMessage.Length)
