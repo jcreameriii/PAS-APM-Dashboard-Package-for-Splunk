@@ -52,6 +52,28 @@
   </row>
   <row>
     <panel>
+      <title>VAULT Server Administrator Logon History (Last 30 Days)</title>
+      <table>
+        <search>
+          <query>host="10.0.1.10" Product=LogonMonitor 
+| rename Info2 as Username 
+| rename Info3 as SID 
+| rename Info4 as LogonTime
+|  table Username SID LogonTime 
+| dedup LogonTime</query>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <title>Hardware Performance Monitors: VAULT</title>
     </panel>
   </row>
