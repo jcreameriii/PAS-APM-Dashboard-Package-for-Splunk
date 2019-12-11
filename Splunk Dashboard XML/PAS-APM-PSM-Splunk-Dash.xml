@@ -289,4 +289,25 @@
       </chart>
     </panel>
   </row>
+  <row>
+    <panel>
+      <title>PSM Shadow Users Inventory List</title>
+      <table>
+        <search>
+          <query>Product="PSMShadowUser" 
+| rename Info1 as UserName 
+| rename Info2 as VaultUser  
+| table UserName VaultUser _time 
+| dedup VaultUser</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">20</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
 </dashboard>
