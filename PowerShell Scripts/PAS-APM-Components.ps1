@@ -5,6 +5,7 @@ $SYSLOGSERVER="10.0.0.2"
 $Version = "1.0.0000"
 $Date = Get-Date
 $DateTime = $DATE.ToString("yyyy-MM-ddTHH:mm:ssZ")
+$userAgent = [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
 
 #Cyberark Password Manager Service Check
 $MonitorType = "ApplicationMonitor"
@@ -171,7 +172,7 @@ $MonitorType = "SyntheticTransactionMonitor"
 $stopwatch = New-Object System.Diagnostics.Stopwatch
 $stopwatch.Start()
 $pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/logon"
-$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing | Format-Table -HideTableHeaders StatusCode | Out-String
+$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing -UserAgent $userAgent | Format-Table -HideTableHeaders StatusCode | Out-String
 Write-Host $httpcheck
     If ($httpcheck -like "*200*") { $httpstatus = 200 } else { $httpstatus = 404 }
 $stopwatch.Stop()
@@ -192,7 +193,7 @@ $MonitorType = "SyntheticTransactionMonitor"
 $stopwatch = New-Object System.Diagnostics.Stopwatch
 $stopwatch.Start()
 $pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/cyberark"
-$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing | Format-Table -HideTableHeaders StatusCode | Out-String
+$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing -UserAgent $userAgent | Format-Table -HideTableHeaders StatusCode | Out-String
 Write-Host $httpcheck
     If ($httpcheck -like "*200*") { $httpstatus = 200 } else { $httpstatus = 404 }
 $stopwatch.Stop()
@@ -213,7 +214,7 @@ $MonitorType = "SyntheticTransactionMonitor"
 $stopwatch = New-Object System.Diagnostics.Stopwatch
 $stopwatch.Start()
 $pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/ldap"
-$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing | Format-Table -HideTableHeaders StatusCode | Out-String
+$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing -UserAgent $userAgent | Format-Table -HideTableHeaders StatusCode | Out-String
 Write-Host $httpcheck
     If ($httpcheck -like "*200*") { $httpstatus = 200 } else { $httpstatus = 404 }
 $stopwatch.Stop()
@@ -234,7 +235,7 @@ $MonitorType = "SyntheticTransactionMonitor"
 $stopwatch = New-Object System.Diagnostics.Stopwatch
 $stopwatch.Start()
 $pvwaurl = "https://components.cyberarkdemo.com/PasswordVault/v10/radius"
-$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing | Format-Table -HideTableHeaders StatusCode | Out-String
+$httpcheck = invoke-webrequest $pvwaurl -DisableKeepAlive -UseBasicParsing -UserAgent $userAgent | Format-Table -HideTableHeaders StatusCode | Out-String
 Write-Host $httpcheck
     If ($httpcheck -like "*200*") { $httpstatus = 200 } else { $httpstatus = 404 }
 $stopwatch.Stop()
