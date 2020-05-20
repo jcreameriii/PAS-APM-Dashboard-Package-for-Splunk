@@ -59,6 +59,7 @@
 | rename Info2 as Username 
 | rename Info3 as SID 
 | rename Info4 as LogonTime
+| sort -LogonTime
 |  table Username SID LogonTime 
 | dedup LogonTime</query>
           <earliest>-30d@d</earliest>
